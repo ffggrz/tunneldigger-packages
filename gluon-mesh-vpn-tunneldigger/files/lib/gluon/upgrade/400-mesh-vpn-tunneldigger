@@ -49,7 +49,7 @@ uci:save('network')
 uci:commit('network')
 
 
-uci:section('firewall', 'include', 'mesh_vpn_dns',
+uci:section('firewall', 'include', 'mesh_vpn_dns_tunneldigger',
 	  {
 	    type = 'restore',
 	    path = '/lib/gluon/mesh-vpn-tunneldigger/iptables.rules',
