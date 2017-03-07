@@ -5,13 +5,13 @@ PKG_VERSION:=3
 
 PKG_BUILD_DIR := $(BUILD_DIR)/$(PKG_NAME)
 
-include $(INCLUDE_DIR)/package.mk
+include ../gluon.mk
 
 define Package/gluon-mesh-vpn-tunneldigger
   SECTION:=gluon
   CATEGORY:=Gluon
-  TITLE:=Support for connecting batman-adv meshes via tunneltigger/l2tpv3 pseudowire
-  DEPENDS:=+gluon-core gluon-mesh-batman-adv +gluon-wan-dnsmasq +tunneldigger +iptables-mod-extra +simple-tc
+  TITLE:=Support for connecting meshes via tunneltigger/l2tpv3 pseudowire
+  DEPENDS:=+gluon-core +gluon-wan-dnsmasq +tunneldigger +iptables +iptables-mod-extra +simple-tc
 endef
 
 define Package/gluon-mesh-vpn-tunneldigger/description
@@ -26,10 +26,12 @@ define Build/Configure
 endef
 
 define Build/Compile
+	$(call GluonSrcDiet,./luasrc,$(PKG_BUILD_DIR)/luadest/)
 endef
 
 define Package/gluon-mesh-vpn-tunneldigger/install
 	$(CP) ./files/* $(1)/
+	$(CP) $(PKG_BUILD_DIR)/luadest/* $(1)/	
 endef
 
 define Package/gluon-mesh-vpn-tunneldigger/postinst
